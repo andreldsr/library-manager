@@ -1,0 +1,46 @@
+spring:
+  main:
+    banner-mode: log
+  profiles:
+    active: ${ENV_PROFILE:local}
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      jdbc:
+        time_zone: UTC
+    show-sql: true
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+    url: ${ENV_JDBC_URL:jdbc:postgresql://localhost:5432/library-manager}
+    username: library-manager
+    password: library-manager
+    hikari:
+      pool-name: library-manager-connection-pool
+      maximum-pool-size: 10
+  mvc:
+    problemdetails:
+      enabled: true
+
+
+springdoc:
+  enable-native-support: true
+  show-login-endpoint: true
+
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+server:
+  port: ${PORT:8080}
+
+jwt:
+  secret: ${JWT_SECRET:ff448f84-686c-47fc-a563-432711006f5a}
