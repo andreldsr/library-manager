@@ -13,7 +13,6 @@ class LendingDatasource(private val lendingRepository: LendingRepository) {
     fun findAllForToday(pageable: Pageable) =
         lendingRepository.findAllByReturnDateAndReturnedAtNull(LocalDate.now(), pageable)
 
-
     fun findAllOverdue(pageable: Pageable) =
         lendingRepository.findAllByReturnDateBeforeAndReturnedAtNull(LocalDate.now(), pageable)
 

@@ -50,5 +50,4 @@ class UserService(
         if (userDatasource.existsByLogin(request.login)) throw AlreadyExistsException("User already exists")
         if (request.role == "ROLE_ADMIN") throw IllegalArgumentException("Invalid role")
     }
-
 }

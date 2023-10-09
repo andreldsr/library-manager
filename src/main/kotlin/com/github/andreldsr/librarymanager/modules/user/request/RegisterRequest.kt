@@ -5,5 +5,5 @@ data class RegisterRequest(
     val name: String,
     val password: String,
     val role: String,
-    val description: String? = null,
+    val description: String? = null
 )

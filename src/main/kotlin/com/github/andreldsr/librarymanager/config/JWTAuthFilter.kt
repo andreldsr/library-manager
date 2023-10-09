@@ -57,7 +57,7 @@ class JWTAuthFilter(
         response: HttpServletResponse
     ): UserDetails? {
         val userEmail = jwtUtils.extractUsername(jwtToken)
-        if (userEmail == null && SecurityContextHolder.getContext().authentication != null) {
+        if (SecurityContextHolder.getContext().authentication != null) {
             filterChain.doFilter(request, response)
             return null
         }

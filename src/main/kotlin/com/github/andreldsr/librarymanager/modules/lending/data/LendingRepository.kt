@@ -12,10 +12,13 @@ import java.time.LocalDate
 interface LendingRepository : JpaRepository<Lending, Long> {
     fun findAllByUserId(userId: Long, pageable: Pageable): Page<LendingListDTO>
     fun findAllByBookId(bookId: Long, pageable: Pageable): Page<LendingListDTO>
+
     @EntityGraph(attributePaths = ["book", "user"])
     fun findAllByReturnedAtNull(pageable: Pageable): Page<LendingListDTO>
+
     @EntityGraph(attributePaths = ["book", "user"])
     fun findAllByReturnDateAndReturnedAtNull(returnDate: LocalDate, pageable: Pageable): Page<LendingListDTO>
+
     @EntityGraph(attributePaths = ["book", "user"])
     fun findAllByReturnDateBeforeAndReturnedAtNull(returnDate: LocalDate, pageable: Pageable): Page<LendingListDTO>
 
