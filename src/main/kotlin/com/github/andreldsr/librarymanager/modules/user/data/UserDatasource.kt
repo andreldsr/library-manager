@@ -1,5 +1,6 @@
 package com.github.andreldsr.librarymanager.modules.user.data
 
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Repository
 
 @Repository
@@ -8,4 +9,5 @@ class UserDatasource(private val userRepository: UserRepository) {
     fun existsByLogin(login: String) = userRepository.existsByLogin(login)
     fun create(user: User) = userRepository.save(user)
     fun findById(userId: Long) = userRepository.findById(userId)
+    fun findByName(name: String, pageable: Pageable) = userRepository.findByName(name, pageable)
 }

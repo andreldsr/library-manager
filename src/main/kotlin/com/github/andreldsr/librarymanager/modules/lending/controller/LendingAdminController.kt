@@ -18,6 +18,9 @@ class LendingAdminController(private val lendingService: LendingService) {
     @GetMapping
     fun findAll(@PageableDefault pageable: Pageable) = lendingService.findAll(pageable)
 
+    @GetMapping("/{id}")
+    fun findDetail(@PathVariable id: Long) = lendingService.findDetailById(id)
+
     @GetMapping("/open")
     fun findAllOpen(@PageableDefault pageable: Pageable) = lendingService.findAllOpen(pageable)
 

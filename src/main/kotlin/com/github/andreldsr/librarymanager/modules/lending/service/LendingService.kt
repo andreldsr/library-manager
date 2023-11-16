@@ -20,6 +20,7 @@ class LendingService(
     private val userDatasource: UserDatasource
 ) {
     fun findAll(pageable: Pageable) = lendingDatasource.findAll(pageable)
+    fun findDetailById(id: Long) = lendingDatasource.findDetailById(id)
     fun findAllByUserId(userId: Long, pageable: Pageable) = lendingDatasource.findAllByUserId(userId, pageable)
     fun findAllByBookId(bookId: Long, pageable: Pageable) = lendingDatasource.findAllByBookId(bookId, pageable)
     fun findAllForToday(pageable: Pageable) = lendingDatasource.findAllForToday(pageable)

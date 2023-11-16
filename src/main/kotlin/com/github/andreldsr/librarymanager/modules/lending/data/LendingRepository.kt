@@ -1,5 +1,6 @@
 package com.github.andreldsr.librarymanager.modules.lending.data
 
+import com.github.andreldsr.librarymanager.modules.lending.data.projection.LendingDetailDTO
 import com.github.andreldsr.librarymanager.modules.lending.data.projection.LendingListDTO
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -13,6 +14,8 @@ interface LendingRepository : JpaRepository<Lending, Long> {
     fun findAllByUserId(userId: Long, pageable: Pageable): Page<LendingListDTO>
     fun findAllByBookId(bookId: Long, pageable: Pageable): Page<LendingListDTO>
 
+    @EntityGraph(attributePaths = ["book", "user"])
+    fun findDetailById(id: Long): LendingDetailDTO
     @EntityGraph(attributePaths = ["book", "user"])
     fun findAllByReturnedAtNull(pageable: Pageable): Page<LendingListDTO>
 

@@ -10,16 +10,17 @@ spring:
     properties:
       jdbc:
         time_zone: UTC
-    show-sql: true
+    show-sql: ${SHOW_SQL:false}
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
-    url: ${ENV_JDBC_URL:jdbc:postgresql://localhost:5432/library-manager}
-    username: library-manager
-    password: library-manager
+#    url: ${AZURE_POSTGRESQL_CONNECTIONSTRING:jdbc:postgresql://library-manager-server.postgres.database.azure.com:5432/library-manager-database?sslmode=require&user=vcyiuuevid&password=2Y36021744LE6YIO%24}
+    url: ${DATABASE_ULR:jdbc:postgresql://localhost:5432/library-manager}
+    username: ${DATABASE_USERNAME:library-manager}
+    password: ${DATABASE_PASSWORD:library-manager}
     hikari:
       pool-name: library-manager-connection-pool
-      maximum-pool-size: 10
+      maximum-pool-size: ${DATABASE_POOL_SIZE:10}
   mvc:
     problemdetails:
       enabled: true

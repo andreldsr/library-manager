@@ -66,4 +66,5 @@ class BookService(
     }
 
     fun findById(id: Long) = bookDatasource.findById(id)
+    fun getStats() = bookDatasource.getStats()
 }

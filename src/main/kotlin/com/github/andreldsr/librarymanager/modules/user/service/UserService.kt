@@ -7,6 +7,7 @@ import com.github.andreldsr.librarymanager.modules.user.data.Profile
 import com.github.andreldsr.librarymanager.modules.user.data.User
 import com.github.andreldsr.librarymanager.modules.user.data.UserDatasource
 import com.github.andreldsr.librarymanager.modules.user.request.RegisterRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -18,6 +19,8 @@ class UserService(
     private val passwordEncoder: PasswordEncoder
 ) : UserDetailsService {
     override fun loadUserByUsername(username: String) = userDatasource.findByLogin(username)
+
+    fun findByName(name: String, pageable: Pageable) = userDatasource.findByName(name, pageable)
 
     fun registerNewUser(request: RegisterRequest): User {
         validate(request)
