@@ -23,4 +23,3 @@ class BookDatasource(private val bookRepository: BookRepository) {
     fun removeLending(id: Long) = bookRepository.updateLending(id, null)
     fun getStats() = bookRepository.getStats(LocalDate.now())
 }
-

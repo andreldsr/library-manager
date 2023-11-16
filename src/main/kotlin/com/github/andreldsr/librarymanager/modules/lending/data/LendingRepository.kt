@@ -16,6 +16,7 @@ interface LendingRepository : JpaRepository<Lending, Long> {
 
     @EntityGraph(attributePaths = ["book", "user"])
     fun findDetailById(id: Long): LendingDetailDTO
+
     @EntityGraph(attributePaths = ["book", "user"])
     fun findAllByReturnedAtNull(pageable: Pageable): Page<LendingListDTO>
 

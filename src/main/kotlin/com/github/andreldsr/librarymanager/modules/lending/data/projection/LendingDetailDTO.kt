@@ -8,7 +8,7 @@ interface LendingDetailDTO {
     fun getBookTitle(): String
     fun getBookCopy(): String
     fun getBookLocation(): String
-    fun getBookObservation() : String
+    fun getBookObservation(): String
     fun getUserName(): String
     fun getReturnDate(): LocalDate
     fun getReturnedAt(): LocalDate?

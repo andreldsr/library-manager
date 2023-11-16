@@ -60,14 +60,17 @@ interface BookRepository : JpaRepository<Book, Long> {
 
     @EntityGraph(attributePaths = ["authors", "publisher"])
     override fun findById(id: Long): Optional<Book>
-    @Query("""
+
+    @Query(
+        """
        SELECT 
             count(*) as total, 
             SUM(CASE WHEN l IS NOT NULL then 1 else 0 END) AS lent,
             SUM(CASE WHEN l IS NOT NULL AND l.returnDate = :today THEN 1 ELSE 0 END) AS today,
             SUM(CASE WHEN l IS NOT NULL AND l.returnDate < :today THEN 1 ELSE 0 END) AS delayed
        FROM Book b LEFT JOIN b.lending l 
-    """)
+    """
+    )
     fun getStats(today: LocalDate): BookStatsDTO
 
     /*

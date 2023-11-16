@@ -8,8 +8,10 @@ import org.springframework.data.jpa.repository.Query
 
 interface UserRepository : JpaRepository<User, Long> {
     fun existsByLogin(login: String): Boolean
+
     @EntityGraph(attributePaths = ["roles"])
     fun findByLogin(login: String): User
+
     @Query(value = "SELECT u FROM User u where u.name ILIKE %:name%")
     fun findByName(name: String, pageable: Pageable): Page<UserListDto>
 }
