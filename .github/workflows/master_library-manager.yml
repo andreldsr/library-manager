@@ -20,8 +20,8 @@ jobs:
       - name: Build and deploy native image to Azure Spring Apps
         run: |
           az spring app build-and-deploy \
-            --resource-group ${{ RESOURCE_GROUP }} \
-            --service-instance ${{ SERVICE_INSTANCE }} \
-            --app-name ${{ APP_NAME }} \
-            --build-path ${{ APP_NAME }} \
-            --image-name ${{ APP_NAME }}:latest
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --service-instance ${{ env.SERVICE_INSTANCE }} \
+            --app-name ${{ env.APP_NAME }} \
+            --build-path ${{ env.APP_NAME }} \
+            --image-name ${{ env.APP_NAME }}:latest
