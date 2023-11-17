@@ -1,5 +1,6 @@
 package com.github.andreldsr.librarymanager.config
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -12,18 +13,22 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 class SecurityConfiguration(
     private val jwtAuthFilter: JWTAuthFilter,
     private val userDeatilsService: UserDetailsService,
-    private val passwordEncoder: PasswordEncoder
+    private val passwordEncoder: PasswordEncoder,
+    @Value("\${server.cors-origins}") private val corsOrigins: List<String>
 ) {
     @Bean
     fun secutiryFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
             .csrf { c -> c.disable() }
-            .cors { c -> c.disable() }
+            .cors { }
             .authorizeHttpRequests { auth ->
                 auth
                     .requestMatchers(
@@ -58,5 +63,19 @@ class SecurityConfiguration(
     @Bean
     fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager {
         return config.authenticationManager
+    }
+
+    @Bean
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val config = CorsConfiguration()
+        config.allowedOrigins = corsOrigins
+        config.allowedMethods = listOf("*")
+        config.allowedHeaders = listOf("*")
+        config.exposedHeaders = listOf("Authorization")
+        config.allowCredentials = true
+//        config.maxAge = 3600
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", config)
+        return source
     }
 }
