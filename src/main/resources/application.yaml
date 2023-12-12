@@ -15,9 +15,9 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: org.postgresql.Driver
 #    url: ${AZURE_POSTGRESQL_CONNECTIONSTRING:jdbc:postgresql://library-manager-server.postgres.database.azure.com:5432/library-manager-database?sslmode=require&user=vcyiuuevid&password=2Y36021744LE6YIO%24}
-    url: ${DATABASE_ULR:jdbc:postgresql://library-manager-db-server.postgres.database.azure.com:5432/library-manager}
-    username: ${DATABASE_USERNAME:librarymanager}
-    password: ${DATABASE_PASSWORD:iWiI&5hG&v2L}
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/library-manager}
+    username: ${DATABASE_USERNAME:library-manager}
+    password: ${DATABASE_PASSWORD:library-manager}
     hikari:
       pool-name: library-manager-connection-pool
       maximum-pool-size: ${DATABASE_POOL_SIZE:10}

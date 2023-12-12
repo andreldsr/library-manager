@@ -40,12 +40,12 @@ class BookService(
         title = request.title,
         authors = authors,
         publisher = publisher,
-        registerNumber = request.registerNumber,
-        registrationDate = LocalDate.parse(request.registrationDate, DateTimeFormatter.ofPattern("dd.MM.yyyy")),
+        registerNumber = Integer.parseInt(request.registerNumber),
+        registrationDate = LocalDate.parse(request.registrationDate, DateTimeFormatter.ofPattern("dd.MM.yy")),
         volume = request.volume,
         copy = request.copy,
         location = request.location,
-        publicationYear = request.publicationYear,
+        publicationYear = Integer.parseInt(request.publicationYear),
         acquisitionForm = request.acquisitionForm,
         index = request.index,
         cdd = request.cdd,
@@ -56,8 +56,8 @@ class BookService(
         publisherDatasource.findByName(publisher) ?: publisherDatasource.create(Publisher(name = publisher))
 
     private fun validate(request: CreateBookRequest) {
-        if (bookDatasource.existsByRegisterNumber(request.registerNumber)) {
-            throw AlreadyExistsException("Book already exists")
+        if (bookDatasource.existsByRegisterNumber(Integer.parseInt(request.registerNumber))) {
+            throw AlreadyExistsException("Book ${request.registerNumber} already exists")
         }
     }
 
