@@ -41,7 +41,7 @@ class BookService(
         authors = authors,
         publisher = publisher,
         registerNumber = Integer.parseInt(request.registerNumber),
-        registrationDate = LocalDate.parse(request.registrationDate, DateTimeFormatter.ofPattern("dd.MM.yy")),
+        registrationDate = LocalDate.parse(request.registrationDate, DateTimeFormatter.ofPattern("dd.MM.yyyy")),
         volume = request.volume,
         copy = request.copy,
         location = request.location,

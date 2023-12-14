@@ -12,6 +12,14 @@ interface UserRepository : JpaRepository<User, Long> {
     @EntityGraph(attributePaths = ["roles"])
     fun findByLogin(login: String): User
 
-    @Query(value = "SELECT u FROM User u where u.name ILIKE %:name%")
+    @Query(
+        value = """
+        SELECT 
+            u.id as id, 
+            u.name as name, 
+            u.login as login, 
+            u.profile.description as description 
+        FROM User u where u.name ILIKE %:name%"""
+    )
     fun findByName(name: String, pageable: Pageable): Page<UserListDto>
 }

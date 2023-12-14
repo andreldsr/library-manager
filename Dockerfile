@@ -1,26 +1,33 @@
-# Stage 1: Build the application
-FROM gradle:latest AS build
-WORKDIR /app
+# Step 1: Build the app
+FROM ghcr.io/graalvm/native-image-community:21 as build
 
-COPY build.gradle.kts .
-COPY settings.gradle.kts .
-COPY src src
+WORKDIR /home/gradle/project
 
-USER root
-RUN chown -R gradle /app
+# Copy Gradle files
+COPY build.gradle.kts settings.gradle.kts gradlew gradlew.bat ./
+COPY gradle ./gradle
 
-USER gradle
-RUN gradle clean build --no-daemon
+RUN microdnf install findutils
 
-# Stage 2: Create a minimal runtime image
-FROM openjdk:17-jdk-alpine
+RUN chmod +x gradlew
+# Download dependencies
+RUN ./gradlew dependencies --stacktrace
 
-WORKDIR /app
+# Copy all project files
+COPY . .
 
-# Copy the JAR file from the build stage
-COPY --from=build /app/build/libs/*.jar app.jar
+# Build the app
+RUN ./gradlew nativeCompile
+
+# Step 2: Create minimal runtime image
+FROM alpine:latest
+
+WORKDIR /home/app
+
+COPY --from=build /home/gradle/project/build/native/nativeCompile .
 
 EXPOSE 8080
 
-# Specify the default command to run when the container starts
-CMD ["java", "-jar", "app.jar"]
+RUN apk add gcompat
+
+CMD ["./library-manager"]

@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Modifying
 import org.springframework.data.jpa.repository.Query
 import java.time.LocalDate
-import java.util.Optional
+import java.util.*
 
 interface BookRepository : JpaRepository<Book, Long> {
     fun existsByRegisterNumber(registerNumber: Int): Boolean
@@ -72,13 +72,4 @@ interface BookRepository : JpaRepository<Book, Long> {
     """
     )
     fun getStats(today: LocalDate): BookStatsDTO
-
-    /*
-    SELECT
-    count(*) as total,
-    SUM(CASE WHEN l.id IS NOT NULL then 1 else 0 END) AS lent,
-    SUM(CASE WHEN l.id IS NOT NULL AND l.return_date = :today THEN 1 ELSE 0 END) AS today,
-    SUM(CASE WHEN l.id IS NOT NULL AND l.return_date < :today THEN 1 ELSE 0 END) AS delayed
-FROM Book b LEFT JOIN lending l ON b.lending_id = l.id;
-     */
 }
